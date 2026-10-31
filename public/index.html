@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseCord — Real-Time Messaging, WebRTC Voice, Video & Screen Sharing Platform</title>
+  <meta name="description" content="Production Discord-inspired communication platform with real-time messaging, WebRTC voice channels, video calls, screen sharing, RBAC roles, and Railway deployment." />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom PulseCord Design System & Layout CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-chat text-primary-token select-none">
+
+  <!-- Full-Viewport 4-Column Discord-Inspired Workspace -->
+  <div class="flex h-screen w-screen overflow-hidden relative">
+
+    <!-- Left Navigation Wrapper (Server Rail + Channel/DM Sidebar) -->
+    <aside id="left-navigation-wrapper" class="hidden md:flex h-full shrink-0 z-30 navigation-drawer-mobile">
+      <!-- Column 1: Server Icon Rail (72px) -->
+      <nav aria-label="Servers Navigation" class="w-[72px] bg-server-rail py-3 flex flex-col items-center justify-between border-r border-subtle overflow-y-auto shrink-0">
+        <div id="server-rail-list" class="flex flex-col items-center w-full"></div>
+        <div class="flex flex-col items-center gap-2 pt-2">
+          <button onclick="app.openModal('userSettings')" class="w-10 h-10 rounded-full bg-sidebar hover:bg-[#5865F2] text-secondary-token hover:text-white flex items-center justify-center transition" title="User Settings & Account Switcher">
+            <i class="fa-solid fa-user-shield text-sm"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Column 2: Channel & DM Navigation Sidebar (248px) -->
+      <section aria-label="Channels and Direct Messages" class="w-60 bg-sidebar flex flex-col h-full border-r border-subtle shrink-0">
+        <!-- Server Name / DM Search Header -->
+        <header id="sidebar-header" class="h-12 px-4 border-b border-subtle flex items-center justify-between shrink-0"></header>
+
+        <!-- Scrollable Channel Tree / DM Conversation List -->
+        <div id="sidebar-body" class="flex-1 overflow-y-auto py-2"></div>
+
+        <!-- Active WebRTC Voice Connection Telemetry Bar -->
+        <div id="voice-connection-status-bar" class="hidden shrink-0"></div>
+
+        <!-- Current User Profile & Quick Audio Controls -->
+        <footer id="user-control-panel" class="shrink-0"></footer>
+      </section>
+    </aside>
+
+    <!-- Column 3: Main Stage (Top Bar + Voice/Video/Screen-Share Theater + Real-Time Chat) -->
+    <main class="flex-1 flex flex-col h-full bg-chat overflow-hidden min-w-0">
+      <!-- Top Channel / DM Header Bar -->
+      <header id="main-top-header" class="h-12 px-4 border-b border-subtle flex items-center justify-between gap-2 shrink-0 bg-chat z-10"></header>
+
+      <!-- Central Stage & Right Member Sidebar Wrapper -->
+      <div class="flex-1 flex overflow-hidden relative">
+        <!-- Main Stage Container -->
+        <section id="main-stage-container" class="flex-1 flex flex-col h-full overflow-hidden min-w-0 select-text"></section>
+
+        <!-- Column 4: Right Member List / Active Voice Status Sidebar -->
+        <aside id="right-member-sidebar" aria-label="Server Members" class="w-60 bg-sidebar border-l border-subtle overflow-y-auto shrink-0 member-sidebar-desktop hidden"></aside>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Dynamic Modal Container -->
+  <div id="modal-root"></div>
+
+  <!-- Toast Notification Stack -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Application Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/vendor/livekit-client.umd.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/webrtc.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
